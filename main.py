@@ -13,17 +13,16 @@ username = 'sylvain'
 password = 'sylvain'
 
 started = False
-lines = []
 calls = {}
 callcontrol = None
 
 def on_message(ws, message):
-    global started, lines
+    global started
 
     msg = json.loads(message)
 
     if started:
-        subscribe_events(msg, lines)
+        subscribe_events(msg)
         return True
     else:
         init(ws, msg)
@@ -51,8 +50,8 @@ def init(ws, msg):
         started = True
         print "waiting for messages"
 
-def subscribe_events(msg, lines):
-    global calls, confd
+def subscribe_events(msg):
+    global calls
 
     data = msg['data']
     name = msg['name']
